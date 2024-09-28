@@ -45,7 +45,17 @@ public class PlatformManager : MonoBehaviour
     private void GeneratePlatform()
     {
         Vector3 newPlatformPosition = new Vector3(nextPlatformXPosition, 0, 0);
-        Platform newPlatform = gameObject.AddComponent<Platform>();
+
+        // Instantiate the platform prefab
+        GameObject platformInstance = Instantiate(platformPrefab, newPlatformPosition, Quaternion.identity);
+
+        // Get the Platform component from the instantiated GameObject
+        Platform newPlatform = platformInstance.GetComponent<Platform>();
+
+        // Initialize the platform with its position
+        newPlatform.Initialize(newPlatformPosition);
+
+        // Add the new platform to the active platforms list
         activePlatforms.Add(newPlatform);
 
         // Update the position for the next platform to be generated
