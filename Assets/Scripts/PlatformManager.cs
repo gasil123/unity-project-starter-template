@@ -5,8 +5,8 @@ public class PlatformManager : MonoBehaviour
 {
     public GameObject platformPrefab;           // Platform prefab
     public Transform playerTransform;           // Player transform to track position
-    public float platformSpacing = 8.0f;        // Distance between platforms
-    public int initialPlatformCount = 4;        // Number of platforms generated at the start
+    public float platformSpacing = 6.0f;        // Distance between platforms
+    public int initialPlatformCount = 6;        // Number of platforms generated at the start
     public float platformDeleteDistance = 10.0f; // Distance behind player to deactivate platforms
 
     private float nextPlatformXPosition = 4.0f;  // X position to generate next platform

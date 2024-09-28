@@ -45,10 +45,4 @@ public class Player : MonoBehaviour
         playerRigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    void OnDrawGizmos()
-    {
-        // Visualize the ground check radius in the editor
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
 }
