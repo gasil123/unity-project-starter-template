@@ -2,24 +2,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private Game game;
+    public Game game;  // Reference to the Game script
 
     void Start()
     {
-        // Initialize the Game class for handling global states
-        game = gameObject.AddComponent<Game>();
-
-        // Perform other initialization here
+        // Ensure that the game object is assigned in the Inspector
+        if (game == null)
+        {
+            game = gameObject.GetComponent<Game>();
+        }
     }
 
     void Update()
     {
-        // Example: Using the Game class to manage the game state
+        // Toggle Pause
         if (Input.GetKeyDown(KeyCode.P))
         {
             game.TogglePause();
         }
 
+        // Quit Game
         if (Input.GetKeyDown(KeyCode.Q))
         {
             game.QuitGame();
