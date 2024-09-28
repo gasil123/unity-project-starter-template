@@ -1,19 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    public GameObject platformPrefab;
+    public GameObject platformPrefab;     // Platform prefab
+    public Transform playerTransform;     // Player transform to track position
+    public float platformSpacing = 2.0f;  // Distance between platforms
+    public int initialPlatformCount = 6;  // Number of platforms generated at the start
+    
+    private float nextPlatformXPosition = 3.0f;  // X position to generate next platform
+    private List<Platform> activePlatforms = new List<Platform>();  // Active platform list
 
-    public Platform CreatePlatform(Vector2 startPosition)
+    // Start is called before the first frame update
+    void Start()
     {
-        // Instantiate platform prefab from this MonoBehaviour
-        GameObject platformObject = Instantiate(platformPrefab, startPosition, Quaternion.identity);
-        return new Platform(platformObject, startPosition);
+        GenerateInitialPlatforms();  // Generate initial platforms
     }
 
-    // Handle platform destruction here
-    public void DestroyPlatform(Platform platform)
+    // Update is called once per frame
+    void Update()
     {
-        Destroy(platform.PlatformGameObject);  // Use MonoBehaviour's Destroy method
+        CheckAndGeneratePlatform();  // Continuously check and generate platforms
+    }
+
+    // Method to generate the initial set of platforms
+    private void GenerateInitialPlatforms()
+    {
+        for (int i = 0; i < initialPlatformCount; i++)
+        {
+            GeneratePlatform();  // Generate platform for the initial set
+        }
+    }
+
+    // Check if new platform needs to be generated based on player position
+    private void CheckAndGeneratePlatform()
+    {
+        if (playerTransform.position.x > nextPlatformXPosition - (initialPlatformCount * platformSpacing))
+        {
+            GeneratePlatform();
+        }
+    }
+
+    // Method to generate a new platform at the next X position
+    private void GeneratePlatform()
+    {
+        Vector3 newPlatformPosition = new Vector3(nextPlatformXPosition, 0, 0);
+        Platform newPlatform = new Platform(platformPrefab, newPlatformPosition);
+        activePlatforms.Add(newPlatform);
+
+        // Update the position for the next platform to be generated
+        nextPlatformXPosition += platformSpacing;
     }
 }
