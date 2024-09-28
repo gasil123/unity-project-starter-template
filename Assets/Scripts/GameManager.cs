@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Game game;
+
     void Start()
     {
-        
+        // Initialize the Game class for handling global states
+        game = new Game();
+
+        // Perform other initialization here
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Example: Using the Game class to manage the game state
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            game.TogglePause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            game.QuitGame();
+        }
     }
 }
