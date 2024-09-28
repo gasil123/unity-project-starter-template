@@ -3,18 +3,20 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    public GameObject platformPrefab;     // Platform prefab
-    public Transform playerTransform;     // Player transform to track position
-    public float platformSpacing = 8.0f;  // Distance between platforms
-    public int initialPlatformCount = 4;  // Number of platforms generated at the start
-    public float platformDeleteDistance = 10.0f; // Distance behind player to delete platforms
+    public GameObject platformPrefab;           // Platform prefab
+    public Transform playerTransform;           // Player transform to track position
+    public float platformSpacing = 8.0f;        // Distance between platforms
+    public int initialPlatformCount = 4;        // Number of platforms generated at the start
+    public float platformDeleteDistance = 10.0f; // Distance behind player to deactivate platforms
 
     private float nextPlatformXPosition = 4.0f;  // X position to generate next platform
-    private List<GameObject> activePlatforms = new List<GameObject>();  // Active platform list
+    private Queue<GameObject> platformPool = new Queue<GameObject>();  // Queue for platform object pool
+    private List<GameObject> activePlatforms = new List<GameObject>(); // List of active platforms
 
     // Start is called before the first frame update
     void Start()
     {
+        InitializePlatformPool();  // Initialize the platform pool
         GenerateInitialPlatforms();  // Generate initial platforms
     }
 
@@ -22,7 +24,18 @@ public class PlatformManager : MonoBehaviour
     void Update()
     {
         CheckAndGeneratePlatform();  // Continuously check and generate platforms
-        DeleteOffscreenPlatforms();  // Continuously check and delete platforms that are off-screen
+        DeactivateOffscreenPlatforms();  // Continuously check and deactivate platforms that are off-screen
+    }
+
+    // Method to initialize the platform pool
+    private void InitializePlatformPool()
+    {
+        for (int i = 0; i < initialPlatformCount; i++)
+        {
+            GameObject platformInstance = Instantiate(platformPrefab);
+            platformInstance.SetActive(false);  // Deactivate it initially
+            platformPool.Enqueue(platformInstance);  // Add it to the queue
+        }
     }
 
     // Method to generate the initial set of platforms
@@ -43,42 +56,52 @@ public class PlatformManager : MonoBehaviour
         }
     }
 
-    // Method to generate a new platform at the next X position
+    // Method to generate a platform from the pool at the next X position
     private void GeneratePlatform()
     {
-       Vector3 newPlatformPosition = new Vector3(nextPlatformXPosition, 0, 0);
+        Vector3 newPlatformPosition = new Vector3(nextPlatformXPosition, 0, 0);
 
         // Check if the last platform's X position is too close to the new platform's position
         if (activePlatforms.Count > 0 && Mathf.Abs(newPlatformPosition.x - activePlatforms[activePlatforms.Count - 1].transform.position.x) < platformSpacing)
         {
-            // Skip platform generation if too close to the previous one
-            return;
+            return;  // Skip generation if too close to the previous platform
         }
 
-        // Instantiate the platform prefab
-        GameObject platformInstance = Instantiate(platformPrefab, newPlatformPosition, Quaternion.identity);
+        // Get a platform from the pool if available
+        GameObject platformInstance = GetPooledPlatform();
 
-        // Add the new platform to the active platforms list
-        activePlatforms.Add(platformInstance);
-
-        // Update the position for the next platform to be generated
-        nextPlatformXPosition += platformSpacing;
+        if (platformInstance != null)
+        {
+            platformInstance.transform.position = newPlatformPosition;
+            platformInstance.SetActive(true);  // Reactivate the platform
+            activePlatforms.Add(platformInstance);  // Add it to the active list
+            nextPlatformXPosition += platformSpacing;  // Update position for the next platform
+        }
     }
 
-    
-
-    // Method to delete platforms that are off-screen (behind the player)
-    private void DeleteOffscreenPlatforms()
+    // Method to get a platform from the pool
+    private GameObject GetPooledPlatform()
     {
-        // Loop through the active platforms list
+        if (platformPool.Count > 0)
+        {
+            return platformPool.Dequeue();  // Get the first platform in the queue
+        }
+
+        // If no platforms available in the pool, instantiate a new one (optional)
+        return Instantiate(platformPrefab);
+    }
+
+    // Method to deactivate platforms that are off-screen (behind the player)
+    private void DeactivateOffscreenPlatforms()
+    {
         for (int i = activePlatforms.Count - 1; i >= 0; i--)
         {
-            // Check if the platform is far behind the player (X axis check for 2D)
             if (playerTransform.position.x - activePlatforms[i].transform.position.x > platformDeleteDistance)
             {
-                // Destroy the platform and remove it from the active platforms list
-                Destroy(activePlatforms[i]);  // Destroy the platform
-                activePlatforms.RemoveAt(i);  // Remove it from the list
+                GameObject platform = activePlatforms[i];
+                platform.SetActive(false);  // Deactivate the platform
+                activePlatforms.RemoveAt(i);  // Remove it from the active list
+                platformPool.Enqueue(platform);  // Return the platform to the pool
             }
         }
     }
