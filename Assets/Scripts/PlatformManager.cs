@@ -12,9 +12,6 @@ public class PlatformManager : MonoBehaviour
     private float nextPlatformXPosition = 4.0f;  // X position to generate next platform
     private List<GameObject> activePlatforms = new List<GameObject>();  // Active platform list
 
-    // A toggle flag for alternating between black and white platforms
-    private bool isBlack = true;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -61,10 +58,6 @@ public class PlatformManager : MonoBehaviour
         // Instantiate the platform prefab
         GameObject platformInstance = Instantiate(platformPrefab, newPlatformPosition, Quaternion.identity);
 
-
-        // Alternate the color between black and white
-        SetPlatformColor(platformInstance);
-
         // Add the new platform to the active platforms list
         activePlatforms.Add(platformInstance);
 
@@ -72,25 +65,7 @@ public class PlatformManager : MonoBehaviour
         nextPlatformXPosition += platformSpacing;
     }
 
-    // Method to alternate the platform color between black and white
-    private void SetPlatformColor(GameObject platform)
-    {
-        // Get the SpriteRenderer component of the platform
-        SpriteRenderer platformSpriteRenderer = platform.GetComponent<SpriteRenderer>();
-
-        if (isBlack)
-        {
-            platformSpriteRenderer.color = Color.black;  // Set to black
-        }
-        else
-        {
-            platformSpriteRenderer.color = Color.white;  // Set to white
-        }
-
-        // Toggle the flag for the next platform
-        isBlack = !isBlack;
-    }
-
+    
 
     // Method to delete platforms that are off-screen (behind the player)
     private void DeleteOffscreenPlatforms()
