@@ -1,36 +1,47 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour 
+public class Player : MonoBehaviour
 {
-    // Player's movement speed
-    public float MovementSpeed { get; set; }
+    // Player's movement speed (adjustable in the Inspector)
+    public float movementSpeed = 5f;
 
-    // Force applied to the player to make them jump
-    public float JumpForce { get; set; }
+    // Force applied to the player to make them jump (adjustable in the Inspector)
+    public float jumpForce = 10f;
 
-    // Player's health points
-    public int HealthPoints { get; set; }
-    
+    // Player's health points (adjustable in the Inspector)
+    public int healthPoints = 100;
+
     // Reference to the Rigidbody2D component attached to the player
     private Rigidbody2D playerRigidbody2D;
 
     // Boolean to check if the player is on the ground
     private bool isPlayerGrounded;
 
-    // Constructor to initialize the player with Rigidbody2D, speed, jump force, and health
-    public Player(Rigidbody2D rigidbody2D, float movementSpeed, float jumpForce, int healthPoints)
+    // Initialize values in the Start method
+    void Start()
     {
-        playerRigidbody2D = rigidbody2D;
-        MovementSpeed = movementSpeed;
-        JumpForce = jumpForce;
-        HealthPoints = healthPoints;
+        // Get the Rigidbody2D component attached to this GameObject
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Handle player movement
+        MovePlayer();
+
+        // Handle jumping if spacebar is pressed and the player is grounded
+        if (Input.GetKeyDown(KeyCode.Space) && isPlayerGrounded)
+        {
+            Jump();
+        }
     }
 
     // Function to move the player horizontally
     public void MovePlayer()
     {
         // Create a new Vector2 for movement with the player's speed and current vertical velocity
-        Vector2 movement = new Vector2(MovementSpeed, playerRigidbody2D.velocity.y);
+        Vector2 movement = new Vector2(movementSpeed, playerRigidbody2D.velocity.y);
 
         // Set the player's Rigidbody2D velocity to the new movement vector
         playerRigidbody2D.velocity = movement;
@@ -39,21 +50,30 @@ public class Player : MonoBehaviour
     // Function to make the player jump
     public void Jump()
     {
-        // Check if the player is on the ground
-        if (isPlayerGrounded)
-        {
-            // Apply a force to the player's Rigidbody2D to make them jump
-            playerRigidbody2D.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        // Apply a force to the player's Rigidbody2D to make them jump
+        playerRigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-            // Set isPlayerGrounded to false because the player is now in the air
-            isPlayerGrounded = false;
+        // Set isPlayerGrounded to false because the player is now in the air
+        isPlayerGrounded = false;
+    }
+
+    // Detect when the player lands on the ground using OnCollisionEnter2D
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // If the player lands on something tagged as "Platform," consider them grounded
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            isPlayerGrounded = true;
         }
     }
 
-    // Function to call when the player lands on the ground
-    public void OnLanding()
+    // Detect when the player leaves the ground using OnCollisionExit2D
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        // Set isPlayerGrounded to true because the player is now on the ground
-        isPlayerGrounded = true;
+        // If the player leaves the platform, they are not grounded anymore
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            isPlayerGrounded = false;
+        }
     }
 }
