@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Initialize the Game class for handling global states
-        game = new Game();
+        game = gameObject.AddComponent<Game>();
 
         // Perform other initialization here
     }
