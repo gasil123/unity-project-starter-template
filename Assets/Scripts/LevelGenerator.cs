@@ -8,16 +8,16 @@ public class LevelGenerator : MonoBehaviour
     public GameObject platformPrefab;
 
     // Distance between each platform along the X axis
-    public float platformSpacing = 1f;
+    public float platformSpacing = 2.0f;
 
     // Reference to the player transform to track its position
     public Transform playerTransform;
 
     // Initial position on the X axis for platform generation
-    private float nextPlatformXPosition = 0f;
+    private float nextPlatformXPosition = 3.0f;
 
     // Number of platforms to generate at the start of the game
-    public int initialPlatformCount = 20;
+    public int initialPlatformCount = 6;
 
     // Start is called before the first frame update
     void Start()
