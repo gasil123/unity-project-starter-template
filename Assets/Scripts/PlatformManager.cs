@@ -7,7 +7,7 @@ public class PlatformManager : MonoBehaviour
     public Transform playerTransform;     // Player transform to track position
     public float platformSpacing = 2.0f;  // Distance between platforms
     public int initialPlatformCount = 6;  // Number of platforms generated at the start
-    
+
     private float nextPlatformXPosition = 3.0f;  // X position to generate next platform
     private List<Platform> activePlatforms = new List<Platform>();  // Active platform list
 
@@ -45,7 +45,7 @@ public class PlatformManager : MonoBehaviour
     private void GeneratePlatform()
     {
         Vector3 newPlatformPosition = new Vector3(nextPlatformXPosition, 0, 0);
-        Platform newPlatform = new Platform(platformPrefab, newPlatformPosition);
+        Platform newPlatform = gameObject.AddComponent<Platform>();
         activePlatforms.Add(newPlatform);
 
         // Update the position for the next platform to be generated
