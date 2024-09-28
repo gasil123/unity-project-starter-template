@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Platform
+public class Platform : MonoBehaviour
 {
     // Position of the platform in the game world
     public Vector2 PlatformPosition { get; private set; }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Game
+public class Game : MonoBehaviour
 {
     private bool isPaused = false;
 
