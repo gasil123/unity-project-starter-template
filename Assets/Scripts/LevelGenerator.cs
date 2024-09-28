@@ -4,40 +4,54 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    // The force applied to the player to make them jump
-    public float jumpThrustForce = 8.0f; 
-    private Rigidbody2D playerRigidbody2D;
-    private bool isPlayerOnGround = true;
+    // Reference to the platform prefab that will be instantiated
+    public GameObject platformPrefab;
+
+    // Distance between each platform along the X axis
+    public float platformSpacing = 5f;
+
+    // Reference to the player transform to track its position
+    public Transform playerTransform;
+
+    // Initial position on the X axis for platform generation
+    private float nextPlatformXPosition = 0f;
+
+    // Number of platforms to generate at the start of the game
+    public int initialPlatformCount = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Get the Rigidbody2D component attached to the player
-        playerRigidbody2D = GetComponent<Rigidbody2D>();
+        // Generate initial platforms when the game starts
+        GenerateInitialPlatforms();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if the space key is pressed and if the player is on the ground
-        if (Input.GetKeyDown(KeyCode.Space) && isPlayerOnGround)
+        // Check if the player has moved far enough to spawn a new platform
+        if (playerTransform.position.x > nextPlatformXPosition - (initialPlatformCount * platformSpacing))
         {
-            // Make the player jump by adding force to the y-axis
-            // ForceMode2D.Impulse adds an instant force to the Rigidbody2D
-            playerRigidbody2D.AddForce(Vector2.up * jumpThrustForce, ForceMode2D.Impulse);
-
-            // The player is no longer on the ground after jumping
-            isPlayerOnGround = false;
+            GeneratePlatform();
         }
     }
 
-    // Check if the player has collided with the ground
-    private void OnCollisionEnter2D(Collision2D collision)
+    // Method to generate the initial set of platforms
+    private void GenerateInitialPlatforms()
     {
-        // If the player collides with an object tagged as "Ground", set isPlayerOnGround to true
-        if (collision.gameObject.CompareTag("Ground"))
+        for (int i = 0; i < initialPlatformCount; i++)
         {
-            isPlayerOnGround = true;
+            GeneratePlatform();
         }
+    }
+
+    // Method to generate a new platform at the next position
+    private void GeneratePlatform()
+    {
+        // Instantiate a new platform at the next X position
+        Instantiate(platformPrefab, new Vector3(nextPlatformXPosition, 0, 0), Quaternion.identity);
+
+        // Update the position for the next platform to be generated further along the X axis
+        nextPlatformXPosition += platformSpacing;
     }
 }
