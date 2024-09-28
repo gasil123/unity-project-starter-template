@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Player
 {
     // Player's movement speed

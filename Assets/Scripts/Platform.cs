@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Platform
 {
     // Position of the platform in the game world
