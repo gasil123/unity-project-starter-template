@@ -116,9 +116,12 @@ Assets/**/*.psb
 Assets/**/*.psd
 Assets/**/*.tga
 Assets/**/*.bmp
-Assets/**/*.gif
 Assets/**/*.hdr
 Assets/**/*.exr
+
+# Ignore all gif assets aside from those in the Recordings directory
+Assets/**/*.gif
+!Recordings/**/*.gif
 
 # Ignore meta files for large assets
 Assets/**/*.meta
