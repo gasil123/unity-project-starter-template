@@ -55,6 +55,18 @@ public class Player : MonoBehaviour
         playerAnimator.SetTrigger("jump");
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the player collides with an item
+        ItemInterface item = collision.GetComponent<ItemInterface>();
+
+        // If the item is not null (i.e. the player collides with an item), collect the item
+        if (item != null)
+        {
+            item.CollectItem();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
