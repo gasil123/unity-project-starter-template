@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Rigidbody2D playerRigidbody2D;
+    public Animator playerAnimator;
+
     public float movementSpeed = 5f;    // Movement speed
     public float jumpForce = 10f;       // Jump force
     public int healthPoints = 100;      // Health points
@@ -10,7 +13,6 @@ public class Player : MonoBehaviour
     public float groundCheckRadius = 0.2f; // The radius of the ground check circle
     public LayerMask groundLayer;       // LayerMask to specify which layers should be considered ground
 
-    private Rigidbody2D playerRigidbody2D;
     private bool isPlayerGrounded;
 
 
@@ -33,6 +35,9 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
+
+        // Set the isGrounded parameter in the animator
+        playerAnimator.SetBool("isPlayerGrounded", isPlayerGrounded);
     }
 
     void MovePlayer()
@@ -45,6 +50,9 @@ public class Player : MonoBehaviour
     {
         // apply jump force to player game object
         playerRigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        // set jump trigger in animator
+        playerAnimator.SetTrigger("jump");
     }
 
     private void OnDrawGizmos()
