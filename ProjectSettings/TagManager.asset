@@ -20,8 +20,8 @@ TagManager:
   - PlayerLayer
   - Water
   - UI
-  - Foreground
-  - Background
+  - 
+  - 
   - GroundLayer
   - BackgroundLayer
   - ForegroundLayer
@@ -50,15 +50,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: 1SkySortLayer
+    uniqueID: 1253250953
+    locked: 0
+  - name: 2CloudSortLayer
+    uniqueID: 2764406539
+    locked: 0
+  - name: 3BackgroundSortLayer
+    uniqueID: 876525123
+    locked: 0
   - name: PlayerSortingLayer
     uniqueID: 3131993583
+    locked: 0
+  - name: 4ForegroundSortLayer
+    uniqueID: 30899907
     locked: 0
   - name: UserInterfaceSortingLayer
     uniqueID: 1861650685
     locked: 0
-  - name: Foreground
+  - name: ForegroundSortingLayer
     uniqueID: 3393972251
     locked: 0
-  - name: Background
+  - name: BackgroundSortingLayer
     uniqueID: 998878977
     locked: 0
