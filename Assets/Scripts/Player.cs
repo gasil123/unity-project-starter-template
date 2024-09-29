@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigidbody2D;
     private bool isPlayerGrounded;
 
+
     void Start()
     {
         // Get the Rigidbody2D component
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
         MovePlayer();
 
         // Jump when space is pressed and the player is grounded
-        if (Input.GetKeyDown(KeyCode.Space) && isPlayerGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && (isPlayerGrounded))
         {
             Jump();
         }
@@ -42,7 +43,14 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+        // apply jump force to player game object
         playerRigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
 }
