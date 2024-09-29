@@ -9,5 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/2024-09-27-auto-run.unity
     guid: d47a322d50b3a402898dd7ae497499cd
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 785d308b9b0c54d2fb7570ac69a97367,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: 0e0545b4180c148c484261578029c983, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: 95744c77821fa42f681a1b16c1861f94, type: 2}

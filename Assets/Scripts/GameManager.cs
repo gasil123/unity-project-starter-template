@@ -1,30 +1,57 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Game game;  // Reference to the Game script
 
-    void Start()
+    public bool isGamePaused = false;
+
+    // Update is called once per frame
+    void Update()
     {
-        // Ensure that the game object is assigned in the Inspector
-        if (game == null)
+        // Check if the player has pressed the "R" key to reload the scene
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            game = gameObject.GetComponent<Game>();
+            Restart();
+        }
+
+        // Check if the player has pressed the "P" key to pause the game
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("P key pressed");
+            TogglePause();
         }
     }
 
-    void Update()
+    // Restart game
+    private void Restart()
     {
-        // Toggle Pause
-        if (Input.GetKeyDown(KeyCode.P))
+        // Get the current active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Reload the current active scene
+        Debug.Log("Restarting...");
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    // Toggle Pause game
+    private void TogglePause()
+    {
+        Debug.Log("TogglePause");
+        // Check if the game is paused
+        if (isGamePaused == true)
         {
-            game.TogglePause();
+            // Unpause the game
+            Time.timeScale = 1f;
+            isGamePaused = false;
+            Debug.Log("Game Unpaused");
+            return;
         }
 
-        // Quit Game
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            game.QuitGame();
-        }
+
+        // Pause the game
+        Time.timeScale = 0f;
+        isGamePaused = true;
+        Debug.Log("Game Paused");
     }
 }
