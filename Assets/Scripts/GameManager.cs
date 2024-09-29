@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        coinsDisplayText.value = 0;
+        coinsDisplayText.text = "Coins: " + coins.ToString();
         // Subscribe to the OnPowerUpCollect event
         PowerUp.OnPowerUpCollect += (value) => IncreaseCoins(value != 0 ? value : PowerUpValue);
         PowerDown.OnPowerDownCollect += (value) => DecreaseCoins(value != 0 ? value : PowerDownValue);
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     void IncreaseCoins(int powerUpValueArg)
     {
         coins += powerUpValueArg;
-        coinsDisplayText.value = coins;
+        coinsDisplayText.text = "Coins: " + coins.ToString();
         // log coins with timestamp
         Debug.Log("coins Increased");
         Debug.Log("Time: " + Time.time + " coins: " + coins);
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     void DecreaseCoins(int powerDownValue)
     {
         coins -= powerDownValue;
-        coinsDisplayText.value = coins;
+        coinsDisplayText.text = "Coins: " + coins.ToString();
         // log coins with timestamp
         Debug.Log("coins Decreased");
         Debug.Log("Time: " + Time.time + " coins: " + coins);
