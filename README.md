@@ -3,6 +3,10 @@
 [![License](https://img.shields.io/github/license/olitreadwell/unity-project-starter-template)](./LICENSE)  
 [![Unity Version](https://img.shields.io/badge/unity-202X.X.XfX-blue.svg)](https://unity.com/releases)
 
+## Demo
+
+![alt text](Recordings/2D-endless-runner-unity-game-2024-09-29.gif)
+
 ## 📖 Overview
 
 This is a **Unity Project Starter Template** designed to help you get started with **your Unity project** quickly and easily. It's pre-configured with a basic project structure, essential packages, and a clean, customizable setup.

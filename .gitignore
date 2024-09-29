@@ -15,7 +15,9 @@
 /[Mm]emoryCaptures/
 
 # Recordings can get excessive in size
-/[Rr]ecordings/
+/[Rr]ecordings/**/*.mp4
+/[Rr]ecordings/**/*.png
+!/[Rr]ecordings/**/*.gif
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -121,7 +123,7 @@ Assets/**/*.exr
 
 # Ignore all gif assets aside from those in the Recordings directory
 Assets/**/*.gif
-!Recordings/**/*.gif
+
 
 # Ignore meta files for large assets
 Assets/**/*.meta
