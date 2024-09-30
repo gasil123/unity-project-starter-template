@@ -7,11 +7,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    int coins = 20;
+    int coins = 200;
     public TextMeshProUGUI coinsDisplayText;
     public TextMeshProUGUI speedDisplayText;
-    public int PowerUpValue = 10;
-    public int PowerDownValue = 10;
+    public int PowerUpValue = 100;
+    public int PowerDownValue = 100;
     public Player playerGameObject;
     public int difficultyIncreaseIntervalSecs = 5;
 
