@@ -8,7 +8,8 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     int score = 200;
-    int health = 100;
+    int maxHealth = 100;
+    int currentHealth = 100;
     public Slider healthBar;
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI speedDisplayText;
@@ -20,12 +21,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(IncreaseDifficulty());
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = currentHealth;
         scoreDisplayText.text = "Score: " + score.ToString();
         speedDisplayText.text = "Speed: " + playerGameObject.movementSpeed.ToString();
         // Subscribe to the OnPowerUpCollect event
         PowerUp.OnPowerUpCollect += (value) => UpdateScore(value != 0 ? value : PowerUpValue);
         // Trap.OnTrapCollect += (value) => DecreaseScore(value != 0 ? value : TrapValue);
-        Trap.OnTrapCollect += (value) => UpdateHealth(value != 0 ? value : TrapValue);
+        Trap.OnTrapCollect += (value) => UpdateHealthDisplay(value != 0 ? value : TrapValue);
     }
 
     void UpdateScore(int valueArg)
@@ -37,10 +41,10 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Time: " + Time.time + " score: " + score);
     }
 
-    void UpdateHealth(int valueArg)
+    void UpdateHealthDisplay(int valueArg)
     {
-        health -= valueArg;
-        healthBar.value = health;
+        currentHealth -= valueArg;
+        healthBar.value = currentHealth;
         // log score with timestamp
         // Debug.Log("score Decreased");
         // Debug.Log("Time: " + Time.time + " score: " + score);

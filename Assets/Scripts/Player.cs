@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float jumpForce = 10f;       // Jump force
     public int healthPoints = 100;      // Health points
 
+
     public Transform groundCheck;       // Reference to a point at the bottom of the player for ground detection
     public float groundCheckRadius = 0.2f; // The radius of the ground check circle
     public LayerMask groundLayer;       // LayerMask to specify which layers should be considered ground
