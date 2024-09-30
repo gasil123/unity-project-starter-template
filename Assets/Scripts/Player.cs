@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
         // Check if the player collides with an item
         ItemInterface item = collision.GetComponent<ItemInterface>();
 
+        Debug.Log("Item : " + item + " collided with player");
+
         // If the item is not null (i.e. the player collides with an item), collect the item
         if (item != null)
         {

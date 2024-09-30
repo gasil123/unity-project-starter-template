@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int PowerUpValue = 100;
     public int PowerDownValue = 100;
     public Player playerGameObject;
-    public int difficultyIncreaseIntervalSecs = 5;
+    public int difficultyIncreaseIntervalSecs = 10;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         speedDisplayText.text = "Speed: " + playerGameObject.movementSpeed.ToString();
         // Subscribe to the OnPowerUpCollect event
         PowerUp.OnPowerUpCollect += (value) => IncreaseCoins(value != 0 ? value : PowerUpValue);
-        PowerDown.OnPowerDownCollect += (value) => DecreaseCoins(value != 0 ? value : PowerDownValue);
+        Trap.OnTrapCollect += (value) => DecreaseCoins(value != 0 ? value : PowerDownValue);
     }
 
     void IncreaseCoins(int powerUpValueArg)
@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
         coins += powerUpValueArg;
         coinsDisplayText.text = "Coins: " + coins.ToString();
         // log coins with timestamp
-        Debug.Log("coins Increased");
-        Debug.Log("Time: " + Time.time + " coins: " + coins);
+        // Debug.Log("coins Increased");
+        // Debug.Log("Time: " + Time.time + " coins: " + coins);
     }
 
     void DecreaseCoins(int powerDownValue)
@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
         coins -= powerDownValue;
         coinsDisplayText.text = "Coins: " + coins.ToString();
         // log coins with timestamp
-        Debug.Log("coins Decreased");
-        Debug.Log("Time: " + Time.time + " coins: " + coins);
+        // Debug.Log("coins Decreased");
+        // Debug.Log("Time: " + Time.time + " coins: " + coins);
     }
 
     // Update is called once per frame
@@ -58,11 +58,11 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             // Increase the difficulty of the game
-            Debug.Log("Difficulty Increased");
+            // Debug.Log("Difficulty Increased");
 
-            // Increase the player's speed by 5
-            playerGameObject.movementSpeed += 5;
-            Debug.Log("Player speed: " + playerGameObject.movementSpeed);
+            // Increase the player's speed by 2
+            playerGameObject.movementSpeed += 2;
+            // Debug.Log("Player speed: " + playerGameObject.movementSpeed);
 
             // update speed display text
             speedDisplayText.text = "Speed: " + playerGameObject.movementSpeed.ToString();

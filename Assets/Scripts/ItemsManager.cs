@@ -59,7 +59,7 @@ public class ItemsManager : MonoBehaviour
         float randomX = player.transform.position.x + Random.Range(20f, 40f); // Random x value in front of the player
         float randomY = Random.Range(-5.7f, 1.0f); // Random y value between ground and player's jump height
 
-        Debug.Log("Spawning item at: " + randomX + ", " + randomY);
+        // Debug.Log("Spawning item at: " + randomX + ", " + randomY);
         // Instantiate the item at the random position
         Instantiate(itemPrefab, new Vector3(randomX, randomY, 0), Quaternion.identity);
     }
@@ -74,7 +74,7 @@ public class ItemsManager : MonoBehaviour
             if (item.transform.position.x < player.transform.position.x - 20f)
             {
                 // log destroyed item with timestamp
-                Debug.Log("Item Destroyed at position: " + item.transform.position + " Time: " + Time.time);
+                // Debug.Log("Item Destroyed at position: " + item.transform.position + " Time: " + Time.time);
                 // Destroy the item
                 Destroy(item);
             }
