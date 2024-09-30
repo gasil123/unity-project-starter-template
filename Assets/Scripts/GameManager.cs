@@ -7,40 +7,40 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    int coins = 200;
-    public TextMeshProUGUI coinsDisplayText;
+    int score = 200;
+    public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI speedDisplayText;
     public int PowerUpValue = 100;
-    public int PowerDownValue = 100;
+    public int TrapValue = 100;
     public Player playerGameObject;
     public int difficultyIncreaseIntervalSecs = 10;
 
     void Start()
     {
         StartCoroutine(IncreaseDifficulty());
-        coinsDisplayText.text = "Coins: " + coins.ToString();
+        scoreDisplayText.text = "Score: " + score.ToString();
         speedDisplayText.text = "Speed: " + playerGameObject.movementSpeed.ToString();
         // Subscribe to the OnPowerUpCollect event
-        PowerUp.OnPowerUpCollect += (value) => IncreaseCoins(value != 0 ? value : PowerUpValue);
-        Trap.OnTrapCollect += (value) => DecreaseCoins(value != 0 ? value : PowerDownValue);
+        PowerUp.OnPowerUpCollect += (value) => IncreaseScore(value != 0 ? value : PowerUpValue);
+        Trap.OnTrapCollect += (value) => DecreaseScore(value != 0 ? value : TrapValue);
     }
 
-    void IncreaseCoins(int powerUpValueArg)
+    void IncreaseScore(int powerUpValueArg)
     {
-        coins += powerUpValueArg;
-        coinsDisplayText.text = "Coins: " + coins.ToString();
-        // log coins with timestamp
-        // Debug.Log("coins Increased");
-        // Debug.Log("Time: " + Time.time + " coins: " + coins);
+        score += powerUpValueArg;
+        scoreDisplayText.text = "Score: " + score.ToString();
+        // log score with timestamp
+        // Debug.Log("score Increased");
+        // Debug.Log("Time: " + Time.time + " score: " + score);
     }
 
-    void DecreaseCoins(int powerDownValue)
+    void DecreaseScore(int TrapValue)
     {
-        coins -= powerDownValue;
-        coinsDisplayText.text = "Coins: " + coins.ToString();
-        // log coins with timestamp
-        // Debug.Log("coins Decreased");
-        // Debug.Log("Time: " + Time.time + " coins: " + coins);
+        score -= TrapValue;
+        scoreDisplayText.text = "Score: " + score.ToString();
+        // log score with timestamp
+        // Debug.Log("score Decreased");
+        // Debug.Log("Time: " + Time.time + " score: " + score);
     }
 
     // Update is called once per frame
