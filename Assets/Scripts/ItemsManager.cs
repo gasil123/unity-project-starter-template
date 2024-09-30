@@ -25,11 +25,17 @@ public class ItemsManager : MonoBehaviour
     {
         if (Time.time >= nextSpawnTime)
         {
+            // Spawn a random number of items
             SpawnRandomNumberOfItems();
+
+            // Update the next spawn time
             nextSpawnTime = Time.time + currentSpawnInterval;
 
             // Increase the spawn interval over time
             currentSpawnInterval = Mathf.Min(currentSpawnInterval + spawnIntervalIncreaseRate, maxSpawnInterval);
+
+            // Remove items that are out of the screen
+            RemoveItems();
         }
     }
 
@@ -56,5 +62,22 @@ public class ItemsManager : MonoBehaviour
         Debug.Log("Spawning item at: " + randomX + ", " + randomY);
         // Instantiate the item at the random position
         Instantiate(itemPrefab, new Vector3(randomX, randomY, 0), Quaternion.identity);
+    }
+
+    // function to remove items once they are out of the screen
+    void RemoveItems()
+    {
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            // the player moves right in 2d, so we check if the item is behind the player
+            if (item.transform.position.x < player.transform.position.x - 20f)
+            {
+                // log destroyed item with timestamp
+                Debug.Log("Item Destroyed at position: " + item.transform.position + " Time: " + Time.time);
+                // Destroy the item
+                Destroy(item);
+            }
+        }
     }
 }
