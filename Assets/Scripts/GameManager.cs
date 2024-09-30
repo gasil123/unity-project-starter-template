@@ -8,10 +8,12 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     int score = 200;
+    int health = 100;
+    public Slider healthBar;
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI speedDisplayText;
     public int PowerUpValue = 100;
-    public int TrapValue = 100;
+    public int TrapValue = 10;
     public Player playerGameObject;
     public int difficultyIncreaseIntervalSecs = 10;
 
@@ -21,23 +23,24 @@ public class GameManager : MonoBehaviour
         scoreDisplayText.text = "Score: " + score.ToString();
         speedDisplayText.text = "Speed: " + playerGameObject.movementSpeed.ToString();
         // Subscribe to the OnPowerUpCollect event
-        PowerUp.OnPowerUpCollect += (value) => IncreaseScore(value != 0 ? value : PowerUpValue);
-        Trap.OnTrapCollect += (value) => DecreaseScore(value != 0 ? value : TrapValue);
+        PowerUp.OnPowerUpCollect += (value) => UpdateScore(value != 0 ? value : PowerUpValue);
+        // Trap.OnTrapCollect += (value) => DecreaseScore(value != 0 ? value : TrapValue);
+        Trap.OnTrapCollect += (value) => UpdateHealth(value != 0 ? value : TrapValue);
     }
 
-    void IncreaseScore(int powerUpValueArg)
+    void UpdateScore(int valueArg)
     {
-        score += powerUpValueArg;
+        score += valueArg;
         scoreDisplayText.text = "Score: " + score.ToString();
         // log score with timestamp
         // Debug.Log("score Increased");
         // Debug.Log("Time: " + Time.time + " score: " + score);
     }
 
-    void DecreaseScore(int TrapValue)
+    void UpdateHealth(int valueArg)
     {
-        score -= TrapValue;
-        scoreDisplayText.text = "Score: " + score.ToString();
+        health -= valueArg;
+        healthBar.value = health;
         // log score with timestamp
         // Debug.Log("score Decreased");
         // Debug.Log("Time: " + Time.time + " score: " + score);

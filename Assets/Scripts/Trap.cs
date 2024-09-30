@@ -6,7 +6,7 @@ using UnityEngine;
 public class Trap : MonoBehaviour, ItemInterface
 {
     public static event Action<int> OnTrapCollect;
-    public int trapValue = 100;
+    public int trapValue = 10;
 
 
     public void CollectItem()
