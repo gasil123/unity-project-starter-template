@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigidbody2D;
     public Animator playerAnimator;
 
-    public float movementSpeed = 5f;    // Movement speed
+    public float movementSpeed = 20f;    // Movement speed
     public float jumpForce = 10f;       // Jump force
     public int healthPoints = 100;      // Health points
 
@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     public LayerMask groundLayer;       // LayerMask to specify which layers should be considered ground
 
     private bool isPlayerGrounded;
-
 
     void Start()
     {
@@ -45,6 +44,8 @@ public class Player : MonoBehaviour
         Vector2 movement = new Vector2(movementSpeed, playerRigidbody2D.velocity.y);
         playerRigidbody2D.velocity = movement;
     }
+
+
 
     void Jump()
     {
