@@ -13,6 +13,7 @@ TagManager:
   - Obstacle
   - PowerUp
   - PowerDown
+  - Item
   layers:
   - Default
   - TransparentFX
